@@ -78,11 +78,11 @@ class Config:
         self.maxNumLines = 2
 
         if is_debug:
-            self.clang_exe = polyite_dir + '/llvm_root/llvm_build_dbg/bin/clang'
-            self.clang_benchmark_exe = polyite_dir + '/llvm_root/llvm_build_dbg/bin/clang'
+            self.clang_exe = polyite_dir + '/llvm_root/build/bin/clang'
+            self.clang_benchmark_exe = polyite_dir + '/llvm_root/build/bin/clang'
         else:
-            self.clang_exe = polyite_dir + '/llvm_root/llvm_build_dbg/bin/clang'
-            self.clang_benchmark_exe = polyite_dir + '/llvm_root/llvm_build_dbg/bin/clang'
+            self.clang_exe = polyite_dir + '/llvm_root/build/bin/clang'
+            self.clang_benchmark_exe = polyite_dir + '/llvm_root/build/bin/clang'
 
 class DomainCoeffInfo:
     def __init__(self, nrIt, nrParPS, stmtInfo, universe, domain):
@@ -859,9 +859,9 @@ def coeffMatrix2IslUnionMap(domInfo, coeffs):
 
 def preparePolyhedron(constraintRepr, timeout=CHERNIKOVA_TIMEOUT):
     cmd = ["/usr/lib/jvm/java-1.8.0-openjdk-amd64/bin/java",
-           "-Djava.library.path=" + polyite_dir + "/scala-isl-utils/libs",
+           "-Djava.library.path=" + polyite_dir + "/polyite/scala-isl-utils/lib",
            "-classpath",
-           polyite_dir + "/chernikova/bin:" + polyite_dir + "/scala-isl-utils/bin:" + polyite_dir + "/isl/interface/isl-scala.jar:" + polyite_dir + "/polyite/libs/scala-library.jar",
+           polyite_dir + "/polyite/chernikova/bin:" + polyite_dir + "/polyite/scala-isl-utils/bin:" + polyite_dir + "/isl/interface/isl-scala.jar:" + polyite_dir + "/polyite/lib/scala-library.jar",
            "org.exastencils.schedopt.chernikova.Main",
            str(constraintRepr)]
     if timeout:
@@ -929,9 +929,9 @@ def islScheduleMap2IslScheduleTree(jsonp, isl_schedule_map):
     str_isl_schedule = base64.b64encode(str(isl_schedule_map).encode('ascii'))
 
     cmd = ["/usr/lib/jvm/java-1.8.0-openjdk-amd64/bin/java",
-           "-Djava.library.path=" + polyite_dir + "/scala-isl-utils/libs",
+           "-Djava.library.path=" + polyite_dir + "/polyite/scala-isl-utils/lib",
            "-classpath",
-           polyite_dir + "/polyite/bin:" + polyite_dir + "/chernikova/bin:" + polyite_dir + "/scala-isl-utils/bin:" + polyite_dir + "/polyite/libs/scala-library.jar:" + polyite_dir + "/isl/interface/isl-scala.jar:" + polyite_dir + "/eclipse/plugins/org.junit_4.12.0.v201504281640/junit.jar:" + polyite_dir + "/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar:" + polyite_dir + "/polyite/libs/mpi.jar:" + polyite_dir + "/polyite/libs/commons-lang3-3.4.jar:" + polyite_dir + "/polyite/libs/commons-lang3-3.4-javadoc.jar:" + polyite_dir + "/polyite/libs/commons-math3-3.6.1.jar:" + polyite_dir + "/polyite/libs/commons-math3-3.6.1-javadoc.jar:" + polyite_dir + "/polyite/libs/commons-math3-3.6.1-sources.jar:" + polyite_dir + "/polyite/libs/commons-math3-3.6.1-tests.jar:" + polyite_dir + "/polyite/libs/commons-math3-3.6.1-test-sources.jar:" + polyite_dir + "/polyite/libs/commons-math3-3.6.1-tools.jar:" + polyite_dir + "/polyite/libs/scala-parser-combinators_2.11-1.0.3.jar",
+           polyite_dir + "/polyite/target/scala-2.11/polyite_2.11-0.1.0-SNAPSHOT.jar:" + polyite_dir + "/polyite/chernikova/target/scala-2.11/chernikova_2.11-0.1.0-SNAPSHOT.jar:" + polyite_dir + "/polyite/scala-isl-utils/target/scala-2.11/isl_2.11-0.1.0-SNAPSHOT.jar:" + polyite_dir + "/polyite/lib/scala-library.jar:" + polyite_dir + "/polyite/scala-isl-utils/lib/isl-scala.jar:" + polyite_dir + "/polyite/lib/mpi.jar:" + polyite_dir + "/polyite/lib/commons-lang3-3.4.jar:" + polyite_dir + "/polyite/lib/scala-parser-combinators_2.11-1.0.3.jar",
            "polyite.IslScheduleMap2IslScheduleTree",
            str_scop, str_isl_schedule]
     out = subprocess.check_output(cmd, stderr=subprocess.DEVNULL)

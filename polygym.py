@@ -861,7 +861,7 @@ def preparePolyhedron(constraintRepr, timeout=CHERNIKOVA_TIMEOUT):
     cmd = ["/usr/lib/jvm/java-1.8.0-openjdk-amd64/bin/java",
            "-Djava.library.path=" + polyite_dir + "/polyite/scala-isl-utils/lib",
            "-classpath",
-           polyite_dir + "/polyite/chernikova/bin:" + polyite_dir + "/polyite/scala-isl-utils/bin:" + polyite_dir + "/isl/interface/isl-scala.jar:" + polyite_dir + "/polyite/lib/scala-library.jar",
+           polyite_dir + "/polyite/chernikova/target/scala-2.11/chernikova_2.11-0.1.0-SNAPSHOT.jar:" + polyite_dir + "/polyite/scala-isl-utils/target/scala-2.11/isl_2.11-0.1.0-SNAPSHOT.jar:" + polyite_dir + "/polyite/scala-isl-utils/lib/isl-scala.jar:" + polyite_dir + "/polyite/lib/scala-library.jar:" + polyite_dir + "/polyite/scala-isl-utils/lib",
            "org.exastencils.schedopt.chernikova.Main",
            str(constraintRepr)]
     if timeout:
@@ -1228,7 +1228,7 @@ def parse_args():
         'function_name': args.function_name.replace('-', '_')
     }
 
-    compilation_params['include_dirs'] += ['/devel/git_3rd/polyite/llvm_root/llvm_build_rel/lib/clang/3.9.1/include']
+    compilation_params['include_dirs'] += ['/home/xluo/RL4Poly/llvm_root/build/lib/clang/3.9.1/include']
 
     config = Config(args.debug)
 

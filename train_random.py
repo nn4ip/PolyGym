@@ -30,6 +30,8 @@ FLAGS = flags.FLAGS
 
 def create_csv_if_not_exists(filename, fieldnames):
     if not os.path.isfile(filename):
+        if not os.path.exists(os.path.dirname(filename)):
+            os.makedirs(os.path.dirname(filename))
         with open(filename, 'w', newline='') as file:
             writer = csv.DictWriter(file, fieldnames=fieldnames, delimiter='\t')
             writer.writeheader()
